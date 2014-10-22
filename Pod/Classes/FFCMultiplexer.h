@@ -1,5 +1,5 @@
 //
-//  FFCMutiplexer.h
+//  FFCMultiplexer.h
 //  FFCLocationManager
 //
 //  Created by Fabian Canas on 10/21/14.
@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FFCMutiplexer : NSObject
+@interface FFCMultiplexer : NSObject
 
 - (void)setOwner:(id)owner;
 
 - (void)addTarget:(id)target;
 
 - (void)removeTarget:(id)target;
+
+- (NSUInteger)count;
 
 @end

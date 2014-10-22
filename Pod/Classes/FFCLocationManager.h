@@ -10,8 +10,12 @@
 
 @interface FFCLocationManager : NSObject
 
-- (void)addTarget:(id<CLLocationManagerDelegate>)target;
+- (void)registerForLocationUpdates:(id<CLLocationManagerDelegate>)delegate;
 
-- (void)removeTarget:(id<CLLocationManagerDelegate>)target;
+- (void)unregisterForLocationUpdates:(id<CLLocationManagerDelegate>)delegate;
+
+- (void)registerForHeadingUpdates:(id<CLLocationManagerDelegate>)delegate;
+
+- (void)unregisterForHeadingUpdates:(id<CLLocationManagerDelegate>)delegate;
 
 @end

@@ -7,55 +7,53 @@
 //
 
 #import "FFCLocationManager.h"
-#import "FFCMutiplexer.h"
-
-#import <CoreLocation/CoreLocation.h>
+#import "FFCMultiplexingLocationManager.h"
 
 @interface FFCLocationManager ()<CLLocationManagerDelegate>
-@property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, strong) FFCMutiplexer *multiplexer;
+@property (nonatomic, strong) FFCMultiplexingLocationManager *locationManager;
+@property (nonatomic, strong) FFCMultiplexingLocationManager *headingManager;
 @end
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation FFCLocationManager
-#pragma GCC diagnostic pop
 
-- (instancetype)init
+- (void)registerForLocationUpdates:(id<CLLocationManagerDelegate>)delegate
 {
-    self = [super init];
-    if (self == nil) {
-        return nil;
-    }
-    
-    _multiplexer = [FFCMutiplexer new];
-    [_multiplexer addTarget:self];
-    
-    return self;
+    [self.locationManager addTarget:delegate];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+- (void)unregisterForLocationUpdates:(id<CLLocationManagerDelegate>)delegate
 {
-    switch (status) {
-        case kCLAuthorizationStatusAuthorizedAlways:
-        case kCLAuthorizationStatusAuthorizedWhenInUse:
-            [manager startUpdatingLocation];
-            break;
-        case kCLAuthorizationStatusNotDetermined:
-        case kCLAuthorizationStatusRestricted:
-        case kCLAuthorizationStatusDenied:
-        default:
-            break;
-    }
+    [self.locationManager addTarget:delegate];
 }
 
-- (CLLocationManager *)locationManager
+- (void)registerForHeadingUpdates:(id<CLLocationManagerDelegate>)delegate
+{
+    [self.headingManager addTarget:delegate];
+}
+
+- (void)unregisterForHeadingUpdates:(id<CLLocationManagerDelegate>)delegate
+{
+    [self.headingManager addTarget:delegate];
+}
+
+- (FFCMultiplexingLocationManager *)locationManager
 {
     if (_locationManager) {
-        _locationManager = [CLLocationManager new];
-        [_locationManager setDelegate:(id<CLLocationManagerDelegate>)self.multiplexer];
+        _locationManager = [FFCMultiplexingLocationManager new];
+        _headingManager.startSelector = @selector(startUpdatingLocation);
+        _headingManager.stopSelector = @selector(stopUpdatingLocation);
     }
     return _locationManager;
+}
+
+- (FFCMultiplexingLocationManager *)headingManager
+{
+    if (_headingManager) {
+        _headingManager = [FFCMultiplexingLocationManager new];
+        _headingManager.startSelector = @selector(startUpdatingHeading);
+        _headingManager.stopSelector = @selector(stopUpdatingHeading);
+    }
+    return _headingManager;
 }
 
 @end

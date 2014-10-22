@@ -1,21 +1,21 @@
 //
-//  FFCMutiplexer.m
+//  FFCMultiplexer.m
 //  FFCLocationManager
 //
 //  Created by Fabian Canas on 10/21/14.
 //  Copyright (c) 2014 Fabian Canas. All rights reserved.
 //
 
-#import "FFCMutiplexer.h"
+#import "FFCMultiplexer.h"
 
 #import <objc/runtime.h>
 
-@interface FFCMutiplexer ()
+@interface FFCMultiplexer ()
 @property (nonatomic, strong) NSHashTable *targets;
 @property(nonatomic, weak) id owner;
 @end
 
-@implementation FFCMutiplexer
+@implementation FFCMultiplexer
 
 - (instancetype)init
 {
@@ -32,6 +32,11 @@
 - (void)removeTarget:(id)target
 {
     [self.targets removeObject:target];
+}
+
+- (NSUInteger)count
+{
+    return [self.targets count];
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel
