@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/FFCLocationManager.svg?style=flat)](http://cocoadocs.org/docsets/FFCLocationManager)
 [![Platform](https://img.shields.io/cocoapods/p/FFCLocationManager.svg?style=flat)](http://cocoadocs.org/docsets/FFCLocationManager)
 
+Mostly boilerplate code I'm tired of writing when interacting with `CLLocationManager`.
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -20,7 +22,7 @@ it, simply add the following line to your Podfile:
 
 ## Author
 
-Fabian Canas, fcanas@gmail.com
+[Fabian Canas](https://github.com/fcanas), ([@fcanas](https://twitter.com/fcanas))
 
 ## License
 
